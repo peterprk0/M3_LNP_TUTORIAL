@@ -319,6 +319,32 @@ The SASA distributions show a discrepancy of about 5% (the average CG SASA is ab
 * Besides hydrogen bonding labels ("d" donor, and "a" for acceptor), electron polarizability labels are also made available in Martini 3: these mimic electron-rich (label "e") or electron-poor (label "v", for "vacancy") regions of aromatic rings. Such labels have been tested to a less extended degree than d/a labels, but have shown great potentials in applications involving aedamers [1]. In the case of 1-ethylnaphthalene, the "e" label may be used to describe bead number 4 (at the center of the naphthalene moiety) and bead number 1 (because connected to an electron-donating group such as -CH2CH3).
 
 * Depending on your application, you may want to include other validation targets, besides free energies of transfer. These can allow you to fine-tune and optimize bead type choices and bonded parameters. Below a non-exhaustive list of potential target properties:
+
+##  References and notes
+
+[1] P.C.T. Souza, et al., [Nat. Methods 2021, DOI: 10.1038/s41592-021-01098-3](https://www.nature.com/articles/s41592-021-01098-3).
+
+[2] R. Alessandri, et al., [Adv. Theory Simul. 2022, DOI: 10.1002/adts.202100391](https://onlinelibrary.wiley.com/doi/full/10.1002/adts.202100391).
+
+[3] S.J. Marrink, et al., [J. Phys. Chem. B. 2007, 111, 7812-7824](https://pubs.acs.org/doi/full/10.1021/jp071097f).
+
+[4] P.C.T. Souza, S. Thallmair, et al., [Nat. Commun. 2020, DOI: 10.1038/s41467-020-17437-5](https://www.nature.com/articles/s41467-020-17437-5).
+
+[5] J. Liu, et al., [Adv. Mater. 2018, DOI: 10.1002/adma.201704630](https://onlinelibrary.wiley.com/doi/10.1002/adma.201704630).
+
+[6] W.L. Jorgensen and J. Tirado-Rives, [PNAS 2005, 102, 6665](https://www.pnas.org/doi/pdf/10.1073/pnas.0408037102); L.S. Dodda, et al., [J. Phys. Chem. B, 2017, 121, 3864](https://pubs.acs.org/doi/full/10.1021/acs.jpcb.7b00272); L.S. Dodda, et al., [Nucleic Acids Res. 2017, 45, W331](https://academic.oup.com/nar/article/45/W1/W331/3747780?login=true).
+
+[7] J. Barnoud, [https://github.com/jbarnoud/cgbuilder](https://github.com/jbarnoud/cgbuilder).
+
+[8] The Gromacs tool `gmx traj` won't allow to choose more than one group unless one passes the flag `-com`. Neither `-nocom` or omitting the flag altogether (which should give `-nocom`) work.
+
+[9] M.N. Melo, H.I. Ingolfsson, S.J. Marrink, [J. Chem. Phys. 2015, 143, 243152](https://pubs.aip.org/aip/jcp/article/143/24/243152/966130/Parameters-for-Martini-sterols-and-hopanoids-based).
+
+[10] S. Natesan, et al., [J. Chem. Inf. Model. 2013, 53, 6, 1424-1435](https://pubs.acs.org/doi/full/10.1021/ci400112k).
+
+[11] L.I. Vazquez-Salazar, M. Selle, et al., [Green Chem. 2020, DOI: 10.1039/D0GC01823F](https://pubs.rsc.org/en/content/articlelanding/2020/gc/d0gc01823f).
+
+[12] J.J. Uusitalo, et al., [J. Chem. Theory Comput. 2015, 11, 8, 3932-3945](https://pubs.acs.org/doi/10.1021/acs.jctc.5b00286).
   - if molecular stacking or packing are of importance, one can use use dimerization free energy landscapes as reference [2];
   - miscibility of binary mixtures has been successfully employed in the parameterization of martini CG solvent models [1] - either by qualitative assessing the mixing behavior or by computing the excess free energy of mixing [1]-[2];
   - other experimental data such as the density of pure liquids or phase transition temperatures [11] can be also used;
