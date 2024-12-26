@@ -11,7 +11,7 @@ Files required and worked examples for this tutorial can be downloaded here.
 
 [1) Generate atomistic reference data](#1-generate-atomistic-reference-data)
 
-2) Atom-to-bead mapping
+[2) Atom-to-bead mapping](#2-atom-to-bead-mapping)
 
 3) Generate the CG mapped trajectory from the atomistic simulation
 
