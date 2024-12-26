@@ -13,9 +13,9 @@ Files required and worked examples for this tutorial can be downloaded here.
 
 [2) Atom-to-bead mapping](#2-atom-to-bead-mapping)
 
-3) Generate the CG mapped trajectory from the atomistic simulation
+[3) Generate the CG mapped trajectory from the atomistic simulation](#3-generate-the-cg-mapped-trajectory-from-the-atomistic-simulation)
 
-4) Create the initial CG itp and tpr files
+[4) Create the initial CG itp and tpr files](#4-create-the-initial-cg-itp-and-tpr-files)
 
 5) Generate target CG distributions from the CG mapped trajectory
 
