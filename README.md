@@ -9,4 +9,4 @@ In this tutorial we will learn how to build a Martini 3 topology for an ionizabl
 
 We will use as an example the molecule SM-102 (Fig. 1), and make use of Gromacs versions 2024.x or later. Required files and worked examples can be downloaded here.
 
-<img src="SM-102.png" width="600" class="center">
+<img src="SM-102.png" width="600" alt="SM-102" class="center">
