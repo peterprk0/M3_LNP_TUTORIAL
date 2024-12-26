@@ -183,3 +183,143 @@ The script will:
   1. extract one frame from your trajectory (mapping it to CG resolution, of course);
   2. use the frame, along with the `top` and `mdp` files (see examples of the latter on the website) to create a `CG.tpr` file for your molecule.
 
+
+## 5) Generate target CG bonded parameters distributions from the CG mapped trajectory
+
+We need to obtain the parameters of the bonded interactions (bonds, constraints, angles, proper and improper dihedrals) which we want in our CG model from our mapped-to-CG atomistic simulations from step 3). However, which bonded terms do we need to have? Let's go back to the drawing table and identify between which beads there should be bonded interactions.
+
+Having decided on the bonded terms to use, they must now be defined in the `itp` file under the `[ bonds ]`, `[ constraints ]`, `[ angles ]`, and `[ dihedrals ]` entries. In general, each bonded potential is defined by stating the atom number of the particles involved, the type of potential involved, and then the parameters involved in the potential, such as reference bond lengths/angle values or force constants. This definition is highly dependent on the type of potentials employed and, as such, users should always reference the [GROMACS manual for specific details](https://manual.gromacs.org/documentation/current/reference-manual/topologies/topology-file-formats.html). Here, we will use this example to cover the most common potentials used in defining Martini topologies.
+
+Bonds are defined under `[ bonds ]` by stating the atom number of the particles involved, the type of bond potential (in this case, type 1, a regular harmonic bond) followed by the reference bond length and force constant. Constraints are defined similarly to bonds, under the `[ constraints ]` section, with the exception that no force constant is needed. If we use bond 1-2 and constraint 2-3 as examples, your `itp` should look something like this:
+```
+[bonds]
+; i  j  funct length    kb
+  1  2   1     0.260   20000 
+...
+```
+Angles and dihedrals follow the same strategy, stating the atom number of the particles involved, the type of potential, and, in this case, the reference angle and force constant. While there are no angles defined in this example, we have 3 improper dihedral potentials in place (regular and improper dihedral potentials correspond to dihedral function types 1 and 2, respectively):
+```
+[angles]
+; i  j  funct length
+  2  3   1     0.260 
+...
+```
+Using initial guesses for the reference bond lengths/angles and force constants you can now create a complete topology for the target molecule. These initial guesses will be improved upon in a further section by comparing the AA and CG bonded distributions and adjusting these values.
+
+### 5.2) Index files and generation of target distributions
+
+Once you have settled on the bonded terms, create index files for the bonds with a directive `[bondX]` for each bond, and which contains pairs of CG beads, for example:
+```
+[bond1]
+  1  2
+[bond2]
+  1  4
+...
+```
+
+and similarly for angles (with triples of CG beads) and dihedrals (with quartets). Write scripts that generate distributions for all bonds, angles, and dihedrals you are interested in. For 1-ethyl-naphthalene, there are seven bonds (5 constraints and 2 bonds) and three dihedrals, as discussed. A script is also provided, so that:
+```
+cd  ENAP-in-water/5_target-distr
+[create bonds.ndx and dihedrals.ndx]
+bash 5_generate_target_distr.sh
+```
+
+will create the distributions. Inspect the folders `bonds_mapped`, `angles_mapped`, and `dihedrals_mapped` for the results. You will find each bond distributions as `bonds_mapped/distr_bond_X.xvg` and a summary of the mean and standard deviations of the mapped bonds as `bonds_mapped/data_bonds.txt`.
+
+For each bond, the script uses the following command (in this example, the command is applied for the first bond, whose index is 0):
+```
+echo 0 | gmx distance -f ../3_mapped/mapped.xtc -n bonds.ndx -s ../4_initial-CG/CG.tpr -oall bonds_mapped/bond_0.xvg -xvg none
+gmx analyze -f bonds_mapped/bond_0.xvg -dist bonds_mapped/distr_bond_0.xvg -xvg none -bw 0.001
+```
+and similarly for the first dihedral:
+```
+echo 0 | gmx angle -type dihedral -f ../3_mapped/mapped.xtc -n dihedrals.ndx -ov dihedrals_mapped/dih_0.xvg
+gmx analyze -f dihedrals_mapped/dih_0.xvg -dist dihedrals_mapped/distr_dih_0.xvg -xvg none -bw 1.0
+```
+
+## 6) Create the CG simulation
+
+We can now finalize the first take on the CG model, `ENAP_take1.itp`, where we can use the info contained in the `data_bonds.txt` and `data_dihedrals.txt` files to come up with better guesses for the bonded parameters:
+
+```
+cd ENAP-in-water/6_CG-takeCURRENT
+cp ../4_initial-CG/molecule.gro      .
+cp ../4_initial-CG/ENAP_initial.itp  ENAP_take1.itp
+[adjust ENAP_take1.itp with input from the previous step]
+bash prepare_CG_1mol_system.sh  molecule.gro  box_CG_W_eq.gro  W  1
+```
+
+where the command will run an energy-minimization, followed by an NPT equilibration, and by an MD run of 50 ns (inspect the script and the various `mdp` files to know more) for the Martini system in water.
+
+Once the MD is run, you can use the index files generated for the mapped trajectory to generate the distributions of the CG trajectory:
+```
+cp ../5_target-distr/bonds.ndx .
+cp ../5_target-distr/dihedrals.ndx .
+bash 6_generate_CG_distr.sh
+```
+which will produce files as done by the `5_generate_target_distr.sh` in the previous step but now for the CG trajectory.
+
+## 7) Optimize CG bonded parameters
+
+You can now plot the distributions against each other and compare. You can use the following scripts:
+```
+cd ENAP-in-water
+gnuplot plot_bonds_tutorial_4x2.gnu 
+gnuplot plot_dihedrals_tutorial_4x1.gnu 
+```
+The plots produced should look like the following, for bonds:
+
+**FIGURE**
+
+and dihedrals (AA is in blue, Martini is in red):
+
+**FIGURE**
+
+The agreement is very good. Note that the bimodality of the distributions of the first two dihedrals cannot be captured by the CG model. However, the size of the CG distribution will seemingly capture the two AA configurations into the single CG configuration. If the agreement is not satisfactory at the first iteration - which is likely to happen - you should play with the equilibrium value and force constants in the CG `itp` and iterate till satisfactory agreement is achieved.
+
+## 8) Comparison to experimental results, further refinements, and final considerations
+
+### 8.1) Molecular volume and shape
+
+The approach described so far is oriented to high-throughput applications where this procedure could be automated. However, COG-based mappings cannot necessarily always work perfectly. In case packing and/or densities seem off, it is advisable to look into how the molecular volume and shape of the CG model compare to the ones of the underlying AA structure.
+
+To this end, we can use the Gromacs tool `gmx sasa` to compute the solvent accessible surface area (SASA) and the Connolly surface of the AA and CG models. While AA force fields can use the default `vdwradii.dat` provided by Gromacs, for CG molecules, such file needs to be modified. For this, copy the `vdwradii.dat` file from the default location to the folder where we will execute the analysis:
+```
+cd ENAP-in-water/7_SASA
+cp /usr/local/gromacs-VERSION/share/gromacs/top/vdwradii.dat  vdwradii_CG.dat
+```
+The `vdwradii_CG.dat` file in the current folder should now be edited so as to contain the radius of the Martini 3 beads based on the atomnames (!) of your system. By the way, the radii for the Martini R-, S-, and T-beads are 0.264, 0.230, and 0.191 nm, respectively. Take a look at `ENAP-worked/7_SASA/vdwradii_CG.dat` in case of doubts.
+
+We also recommend using an updated `vdwradii.dat` for the atomistic reference calculations, instead of the Gromacs default. The file - that you can find among the provided files with the name vdwradii_AA.dat - uses more recent vdW radii from [Rowland and Taylor, J. Phys. Chem. 1996, 100, 7384-7391].
+
+Now, run:
+```
+bash  7_compute_SASAs.sh  ENAP
+```
+that will compute the SASA and Connolly surfaces for both the CG and AA models. The SASA will be compute along the trajectory, with a command that in the case of the AA model looks like this:
+```
+gmx sasa -f ../../3_mapped/AA-traj.whole.xtc -s ../../3_mapped/AA-COG.tpr -ndots 4800 -probe 0.191  -o SASA-AA.xvg
+```
+Note that the probe size is the size of a T-bead (the size of the probe does not matter but you must consistently use a certain size if you want to meaningfully compare the obtained SASA values), and the `-ndots 4800` flag guarantees accurate SASA value. You will instead see that the command used to obtain the Connolly surface uses fewer points (`-ndots 240`) to ease the visualization with softwares such as [VMD](https://www.ks.uiuc.edu/Research/vmd/). Indeed, we can now overlap the Connolly surfaces (computed by the script on the energy-minimized AA structure and its mapped version) by using the following command:
+```
+vmd -m  AA/ENAP-AA-min.gro  AA/surf-AA.pdb  CG/surf-CG.pdb
+```
+This should give you some of the views you find rendered below. Below you find also the plot of the distribution of the SASA along the trajectory - `distr-SASA-AA.xvg` and `distr-SASA-CG.xvg` (AA is in blue, Martini is in red):
+
+**FIGURE**
+
+The SASA distributions show a discrepancy of about 5% (the average CG SASA is about 5% smaller than the AA one - see `data_sasa_AA.xvg` and `distr-SASA-CG.xvg`), which is acceptable, but not ideal. Inspecting the Connolly surfaces (AA in gray, CG in blue) gives you a clearer picture: while the naphthalene moiety on average seems to be captured quite accurately by the CG model, the T-bead 1 does seem not to account for the whole molecular volume of the ethyl group. One way to improve this could be to lengthen bonds 1-2, and 1-4.
+
+### 8.2) Final considerations
+
+* Mapping of some chemical groups, especially when done at higher resolutions (e.g., in aromatic rings), can vary based on the proximity of functional groups. The rule of thumb is that such perturbations may require a shift of ±1 in the degree of polarity of the bead in question.
+
+* Take inspiration from already-developed models when trying to build a Martini 3 molecule for a new small molecule. Several examples can be found on the Martini 3 small molecule GitHub repo.
+
+* Besides hydrogen bonding labels ("d" donor, and "a" for acceptor), electron polarizability labels are also made available in Martini 3: these mimic electron-rich (label "e") or electron-poor (label "v", for "vacancy") regions of aromatic rings. Such labels have been tested to a less extended degree than d/a labels, but have shown great potentials in applications involving aedamers [1]. In the case of 1-ethylnaphthalene, the "e" label may be used to describe bead number 4 (at the center of the naphthalene moiety) and bead number 1 (because connected to an electron-donating group such as -CH2CH3).
+
+* Depending on your application, you may want to include other validation targets, besides free energies of transfer. These can allow you to fine-tune and optimize bead type choices and bonded parameters. Below a non-exhaustive list of potential target properties:
+  - if molecular stacking or packing are of importance, one can use use dimerization free energy landscapes as reference [2];
+  - miscibility of binary mixtures has been successfully employed in the parameterization of martini CG solvent models [1] - either by qualitative assessing the mixing behavior or by computing the excess free energy of mixing [1]-[2];
+  - other experimental data such as the density of pure liquids or phase transition temperatures [11] can be also used;
+  - finally, more specific references are also used, such as the hydrogen-bonding strengths and specificity of interactions for nucleobases [1], following the Martini 2 DNA work [12].
