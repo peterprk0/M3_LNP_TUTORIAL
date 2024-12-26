@@ -9,7 +9,7 @@ Files required and worked examples for this tutorial can be downloaded here.
 
 [Introduction](#introduction)
 
-[1) Generate atomistic reference data](#generate-atomistic-reference-data)
+[1) Generate atomistic reference data](#1)_generate_atomistic_reference_data)
 
 2) Atom-to-bead mapping
 
