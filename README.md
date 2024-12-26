@@ -27,6 +27,7 @@ Files required and worked examples for this tutorial can be downloaded here.
 
 References and notes
 
+
 ## Introduction
 
 In this tutorial we will learn how to build a Martini 3 topology for an ionizable lipid. The aim is to have a pragmatic description of the Martini 3 coarse-graining (CGing) principles [1,2], which follow the main ideas outlined in the seminal Martini 2 work [3].
@@ -36,6 +37,7 @@ We will use as an example the molecule SM-102 (Fig. 1), and make use of Gromacs 
 <p align="center">
 <img src="SM-102.png" width="500" alt="SM-102">
 </p>
+
 
 ## 1) Generate atomistic reference data
 
@@ -71,6 +73,7 @@ bash prepare_1mol_AA_system.sh  ENAP_LigParGen.pdb  spc216.gro  SOL  3
 
 The last command will run an energy-minimization, followed by an NPT equilibration of 250 ps, and by an MD run of 10 ns (inspect the script and the various mdp files to know more). Note that 10 ns is a rather short simulation time, selected for speeding up the current tutorial. You should rather use at least 50 ns, or an even longer running time in case of more complex molecules (you can try to experiment with the simulation time yourself!). In this case, the solvent used is water; however, the script can be adapted to run with any other solvent, provided that you input also an equilibrated solvent box. You should choose a solvent that represents the environment where the molecule will spend most of its time.
 
+
 ## 2) Atom-to-bead mapping
 
 Mapping, i.e., splitting the molecule in building blocks to be described by CG beads, is the heart of coarse-graining and relies on experience, chemical knowledge, and trial-and-error. Here are some guidelines you should follow when mapping a molecule to a Martini 3 model
@@ -93,6 +96,7 @@ In this example, first of all it is important to realize that, within Martini 3,
 Which leaves us with the ethyl group. A T-bead is again a good choice because the T-bead size is suited for describing 2 non-hydrogen atoms. Note that, the beads have also been numbered in the figure for further reference.
 
 A good idea to settle on a mapping is to draw your molecule a few times on a piece of paper, come up with several mappings, compare them, and choose the one that best fulfills the guidelines outlined above.
+
 
 ## 3) Generate the CG mapped trajectory from the atomistic simulation
 
@@ -142,7 +146,7 @@ which will:
   3. finally, map the AA trajectory to CG resolution: the gmx traj -f... command contained in 3_map_trajectory_COG.sh will do COG-mapping because it uses the AA-COG.tpr.
 
 
-## 4) Create the initial CG **itp** and **tpr** files
+## 4) Create the initial CG `itp` and `tpr` files
 
 GROMACS `itp` files are used to define components of a topology as a separate file. In this case we will create one to define the topology for our molecule of interest, that is, define the atoms (that, when talking about CG molecules, are usually called beads), atom types, and properties that make up the molecule, as well as the bonded parameters that define how the molecule is held together.
 
