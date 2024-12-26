@@ -73,15 +73,14 @@ The last command will run an energy-minimization, followed by an NPT equilibrati
 
 ## 2) Atom-to-bead mapping
 
-Mapping, i.e., splitting the molecule in building blocks to be described by CG beads, is the heart of coarse-graining and relies on experience, chemical knowledge, and trial-and-error. Here are some guidelines you should follow when mapping a molecule to a Martini 3 model:
-
-    * only non-hydrogen atoms are considered to define the mapping;
-    * avoid dividing specific chemical groups (e.g., amide or carboxylate) between two beads;
+Mapping, i.e., splitting the molecule in building blocks to be described by CG beads, is the heart of coarse-graining and relies on experience, chemical knowledge, and trial-and-error. Here are some guidelines you should follow when mapping a molecule to a Martini 3 model
+   * only non-hydrogen atoms are considered to define the mapping;
+   * avoid dividing specific chemical groups (e.g., amide or carboxylate) between two beads;
     respect the symmetry of the molecule; it is moreover desirable to retain as much as possible the volume and shape of the underlying AA structure;
     default option for 4-to-1, 3-to-1 and 2-to-1 mappings are regular (R), small (S), and tiny (T) beads; they are the default option for linear fragments, e.g., the two 4-to-1 segments in octane;
-    * R-beads are the best option in terms of computational performance, with the bead size reasonably good to represent 4-to-1 linear molecules;
-    * T-beads are especially suited to represent the flatness of aromatic rings;
-    * S-beads usually better mimic the "bulkier" shape of aliphatic rings;
+   * R-beads are the best option in terms of computational performance, with the bead size reasonably good to represent 4-to-1 linear molecules;
+   * T-beads are especially suited to represent the flatness of aromatic rings;
+   * S-beads usually better mimic the "bulkier" shape of aliphatic rings;
     the number of beads should be optimized such that the maximum mismatch in mapping is ±1 non-hydrogen atom per 10 non-hydrogen atoms of the atomistic structure;
     fully branched fragments should usually use beads of smaller size (the rational being that the central atom of a branched group is buried, that is, it is not exposed to the environment, reducing its influence on the interactions); for example, a neopentane group contains 5 non-hydrogen atoms but, as it is fully branched, you can safely model it as a regular bead.
 
