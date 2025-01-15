@@ -64,11 +64,11 @@ ls
 
 Check out the files there. Essentially, you would need the files that are necessary for generating the production run .tpr
 
-Have a look in the `forcefield` directory and examine the `LIP_A.itp` file, which is the topology based on CHARMM36. Soon, in step 3, we will come back here and change the mass values.
+Have a look in the `forcefield` directory and examine the `SM102-H.itp` file, which is the topology based on CHARMM36. Soon, in step 3, we will come back here and change the mass values.
 
 ```
 cd  forcefield
-vim LIP_A.itp
+vim SM102-H.itp
 ```
 
 ## 2) Atom-to-bead mapping
@@ -106,19 +106,20 @@ cd ../2_atom-to-bead-mapping/
 [download cgbuilder.ndx, cgbuilder.map, and cgbuilder.gro and move them to the current folder, i.e., '2_atom-to-bead-mapping']
 ```
 
-and compare the files obtained to the ones provided in sm102h-parametrization-worked/2_atom-to-bead-mapping where, besides the files we just explained, you can also find a screenshot (sm102h_cgbuilder.png) of the mapping as done with the CGbuilder tool. Note also that the files provided assume the beads to be ordered in the same way as shown in the Figure of Section 2); it is hence recommended to use the same order to greatly facilitate comparisons.
+and compare the files obtained to the ones provided in `sm102h-parametrization-worked/2_atom-to-bead-mapping`. Note also that the files provided assume the beads to be ordered in the same way as shown in the Figure of Section 2); it is hence recommended to use the same order to greatly facilitate comparisons.
 
-After having populated your own `sm102h-parametrization/2_atom-to-bead-mapping` subfolder with - at least - the ndx file (let's call it `cgbuilder.ndx`), move to the folder 3_mapped and copy over the index (we just rename it to `mapping.ndx`), that is:
+After having populated your own `sm102h-parametrization/2_atom-to-bead-mapping` subfolder with - at least - the ndx file (let's call it `cgbuilder.ndx`), move to the folder `3_mapped` and copy over the index (we just rename it to `mapping.ndx`), that is:
 
 ```
 cd  ../3_mapped
-cp  ../2_atom-to-bead-mapping/ENAP_oplsaaTOcg_cgbuilder.ndx  mapping.ndx
+cp  ../2_atom-to-bead-mapping/cgbuilder.ndx  mapping.ndx
 ```
 
-Now, we took into account the hydrogens because center of geometry (COG)-based mapping of AA structures, done taking into account the hydrogen atoms, constitutes the standard procedure for obtaining bonded parameters in Martini 3 [1]-[2]. Hence, we need to consider the hydrogens when mapping the AA structure to CG resolution. Because of a gmx traj unexpected behavior (a potential bug, see note [8]), if we want to stick to gmx traj (like in the good ol' days; alternatives include, e.g., using the MDAnalysis Python library), we need a little hack before being able to run gmx traj. Namely, we need to first create an AA tpr file with the atoms of the atomistic structure all having the same mass. To do this, still from the 3_mapped folder, create a new itp with the modified masses:
+Now, we took into account the hydrogens because center of geometry (COG)-based mapping of AA structures, done taking into account the hydrogen atoms, constitutes the standard procedure for obtaining bonded parameters in Martini 3 [1]-[2]. Hence, we need to consider the hydrogens when mapping the AA structure to CG resolution. Because of a gmx traj unexpected behavior (a potential bug, see note [8]), if we want to stick to gmx traj (like in the good ol' days; alternatives include, e.g., using the MDAnalysis Python library), we need a little hack before being able to run gmx traj. Namely, we need to first create an AA tpr file with the atoms of the atomistic structure all having the same mass. To do this, we will go to `1_AA-reference` folder, and edit the .itp with the modified masses:
 
 ```
-cp  ../1_AA-reference/ENAP_LigParGen.itp  ENAP_LigParGen_COG.itp
+cd  ../1_AA-reference/forcefield/
+vim SM102-H.itp
 ```
 
 Open ENAP_LigParGen_COG.itp with your text editor of choice and change the values on the 8th column under the [ atoms ] directive to an equal value (of, for example, 1.0). This column defines the atom mass in a GROMACS topology file. Now prepare a new top file which includes it:
