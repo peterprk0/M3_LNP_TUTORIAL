@@ -53,7 +53,7 @@ For the sake of time, in the `files-lnp.zip` directory, we already provided the 
 unzip  files-lnp.zip
 ```
 
-which contains a folder called sm102h-parametrization that contains some template folders and useful scripts. We will assume that you will be carrying out the tutorial using this folder structure and scripts. Note that the archive contains also a folder called sm102h-parametrization-worked where you will find a worked version of the tutorial (trajectories not included). This might be useful to use as reference to compare your files as you go on with the tutorial.
+which contains a folder called `sm102h-parametrization` that contains some template folders and useful scripts. We will assume that you will be carrying out the tutorial using this folder structure and scripts. Note that the archive contains also a folder called `sm102h-parametrization-worked` where you will find a worked version of the tutorial (trajectories not included). This might be useful to use as reference to compare your files as you go on with the tutorial.
 
 We can now move to the first subfolder, 1_AA-reference, and see the simulation files (in case you run your own simulation, you would copy the files here):
 
@@ -64,21 +64,12 @@ ls
 
 Check out the files there. Essentially, you would need the files that are necessary for generating the production run .tpr
 
-Input files obtained from LigParGen may come with unknown residue names. Before launching the AA MD simulation, we will substitute the UNK residue name by ENAP. To do so, open the ENAP_LigParGen.pdb with your text editor of choice and replace the UNK entries on the 4th column of the ATOM records section. This column defines the residue name on a PDB file. Now open the ENAP_LigParGen.itp file and replace the UNK entries under the [ moleculetype ] directive and on the 4th column of the [ atoms ] directive. These define the residue name in a GROMACS topology file. (A lengthier discussion on GROMACS topology files will be given in section 4).) Alternatively, the following command - that relies on the Unix utility sed - will replace any UNK occurrence with ENAP (note the extra space after UNK which is important to keep the formatting of the pdb file!):
+Have a look in the `forcefield` directory and examine the `LIP_A.itp` file, which is the topology based on CHARMM36. Soon, in step 3, we will come back here and change the mass values.
 
 ```
-sed -i 's/UNK /ENAP/' ENAP_LigParGen.pdb
-sed -i 's/UNK /ENAP/' ENAP_LigParGen.itp
+cd  forcefield
+vim LIP_A.itp
 ```
-
-Now launch the AA MD simulation:
-
-```
-bash prepare_1mol_AA_system.sh  ENAP_LigParGen.pdb  spc216.gro  SOL  3
-```
-
-The last command will run an energy-minimization, followed by an NPT equilibration of 250 ps, and by an MD run of 10 ns (inspect the script and the various mdp files to know more). Note that 10 ns is a rather short simulation time, selected for speeding up the current tutorial. You should rather use at least 50 ns, or an even longer running time in case of more complex molecules (you can try to experiment with the simulation time yourself!). In this case, the solvent used is water; however, the script can be adapted to run with any other solvent, provided that you input also an equilibrated solvent box. You should choose a solvent that represents the environment where the molecule will spend most of its time.
-
 
 ## 2) Atom-to-bead mapping
 
