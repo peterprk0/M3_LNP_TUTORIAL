@@ -108,7 +108,7 @@ cd ../2_atom-to-bead-mapping/
 
 and compare the files obtained to the ones provided in ENAP-worked/2_atom-to-bead-mapping where, besides the files we just explained, you can also find a screenshot (ENAP_cgbuilder.png) of the mapping as done with the CGbuilder tool. Note also that the files provided assume the beads to be ordered in the same way as shown in the Figure of Section 2); it is hence recommended to use the same order to greatly facilitate comparisons.
 
-After having populated your own ENAP-in-water/2_atom-to-bead-mapping subfolder with - at least - the ndx file (let's call it ENAP_oplsaaTOcg_cgbuilder.ndx), move to the folder 3_mapped and copy over the index (we just rename it to mapping.ndx), that is:
+After having populated your own ``sm102h-parametrization/2_atom-to-bead-mapping` subfolder with - at least - the ndx file (let's call it `cgbuilder.ndx`), move to the folder 3_mapped and copy over the index (we just rename it to `mapping.ndx`), that is:
 
 ```
 cd  ../3_mapped
