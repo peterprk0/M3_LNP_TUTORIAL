@@ -99,16 +99,16 @@ Instead of creating an index file by hand from scratch, an initial AA-to-CG inde
 
 Before you get to it: an important change with respect to Martini 2.x is the fact that now hydrogen atoms are taken into account to determine the relative position of the beads when mapping an atomistic structure to CG resolution [1]-[2] - more on this later in this Section. This should be reflected in your AA-to-CG index file, that is, your index should also contain the hydrogens (in CGbuilder terms, click also on the hydrogens!). The general rule is to map a certain hydrogen atom to the bead which contains the non-hydrogen atom it is attached to.
 
-You can now try to map the SM102_one.gro (which we included in the `2_atom-to-bead-mapping` directory) via CGbuilder. Once done, download the files that CGbuilder creates - ndx, map, and gro - to the 2_atom-to-bead-mapping folder:
+You can now try to map the SM102_one.gro (which we included in the `2_atom-to-bead-mapping` directory) via CGbuilder. Once done, download the files that CGbuilder creates - ndx, map, and gro - to the `2_atom-to-bead-mapping` directory:
 
 ```
 cd ../2_atom-to-bead-mapping/
 [download cgbuilder.ndx, cgbuilder.map, and cgbuilder.gro and move them to the current folder, i.e., '2_atom-to-bead-mapping']
 ```
 
-and compare the files obtained to the ones provided in ENAP-worked/2_atom-to-bead-mapping where, besides the files we just explained, you can also find a screenshot (ENAP_cgbuilder.png) of the mapping as done with the CGbuilder tool. Note also that the files provided assume the beads to be ordered in the same way as shown in the Figure of Section 2); it is hence recommended to use the same order to greatly facilitate comparisons.
+and compare the files obtained to the ones provided in sm102h-parametrization-worked/2_atom-to-bead-mapping where, besides the files we just explained, you can also find a screenshot (sm102h_cgbuilder.png) of the mapping as done with the CGbuilder tool. Note also that the files provided assume the beads to be ordered in the same way as shown in the Figure of Section 2); it is hence recommended to use the same order to greatly facilitate comparisons.
 
-After having populated your own ``sm102h-parametrization/2_atom-to-bead-mapping` subfolder with - at least - the ndx file (let's call it `cgbuilder.ndx`), move to the folder 3_mapped and copy over the index (we just rename it to `mapping.ndx`), that is:
+After having populated your own `sm102h-parametrization/2_atom-to-bead-mapping` subfolder with - at least - the ndx file (let's call it `cgbuilder.ndx`), move to the folder 3_mapped and copy over the index (we just rename it to `mapping.ndx`), that is:
 
 ```
 cd  ../3_mapped
