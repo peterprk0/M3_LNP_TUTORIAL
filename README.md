@@ -47,21 +47,23 @@ For SM-102, we will start parametrizing the charged state (SM-102H), and will ob
 
 Here, we will use the MolCube server (https://openbeta.molcube.com) to obtain the initial SM-102:POPC (30:70) bilayer. The molecule topology is based on the CHARMM36 force field, but of course feel free to use your favorite atomistic force field. Other web-based services such as the automated topology builder (ATB) or CHARMM-GUI can also be used to obtain reference topologies based on other AA force fields. Another important option is to look in the literature for atomistic studies of the molecule you want to parametrize: if you are lucky, somebody might have already published a validated atomistic force field for the molecule, which you can then use to create reference atomistic simulations.
 
-In the `files-lnp.zip` directory, we already provided the GROMACS simulations of SM-102H:POPC (30:70) bilayer in water.
-
-Start by feeding the SMILES string for 1-ethylnaphthalene (namely, CCc1cccc2ccccc21) to the LigParGen server, and pick the "1.14*CM1A-LBCC (Neutral molecules)" charge model (nothing special about this choice of charge model). After submitting the molecule, the server will generate input parameters for several molecular dynamics (MD) packages. Download the structure file (PDB) as well as the OPLS-AA topology in the GROMACS format (TOP) and rename them ENAP_LigParGen.pdb and ENAP_LigParGen.itp, respectively. You can now unzip the zip archive provided:
+For the sake of time, in the `files-lnp.zip` directory, we already provided the a GROMACS simulation of SM-102H:POPC (30:70) bilayer in water, ran for 300 ns. For other ILs, you should run your own bilayer simulations. You can now unzip the zip archive provided:
 
 ```
 unzip  files-lnp.zip
 ```
 
-which contains a folder called ENAP-in-water that contains some template folders and useful scripts. We will assume that you will be carrying out the tutorial using this folder structure and scripts. Note that the archive contains also a folder called ENAP-worked where you will find a worked version of the tutorial (trajectories not included). This might be useful to use as reference to compare your files (e.g., to compare the ENAP_LigParGen.itp you obtained with the one you find in ENAP-worked/1_AA-reference).
+which contains a folder called sm102h-parametrization that contains some template folders and useful scripts. We will assume that you will be carrying out the tutorial using this folder structure and scripts. Note that the archive contains also a folder called sm102h-parametrization-worked where you will find a worked version of the tutorial (trajectories not included). This might be useful to use as reference to compare your files as you go on with the tutorial.
 
-We can now move to the first subfolder, 1_AA-reference, and copy over the files you just obtained from the LigParGen server:
+We can now move to the first subfolder, 1_AA-reference, and see the simulation files (in case you run your own simulation, you would copy the files here):
+
 ```
-cd     ENAP-in-water/1_AA-reference
-[move here the obtained ENAP_LigParGen.pdb and ENAP_LigParGen.itp files]
+cd     sm102h-parametrization/1_AA-reference
+ls
 ```
+
+Check out the files there. Essentially, you would need the files that are necessary for generating the production run .tpr
+
 Input files obtained from LigParGen may come with unknown residue names. Before launching the AA MD simulation, we will substitute the UNK residue name by ENAP. To do so, open the ENAP_LigParGen.pdb with your text editor of choice and replace the UNK entries on the 4th column of the ATOM records section. This column defines the residue name on a PDB file. Now open the ENAP_LigParGen.itp file and replace the UNK entries under the [ moleculetype ] directive and on the 4th column of the [ atoms ] directive. These define the residue name in a GROMACS topology file. (A lengthier discussion on GROMACS topology files will be given in section 4).) Alternatively, the following command - that relies on the Unix utility sed - will replace any UNK occurrence with ENAP (note the extra space after UNK which is important to keep the formatting of the pdb file!):
 
 ```
