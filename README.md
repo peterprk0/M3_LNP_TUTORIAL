@@ -48,6 +48,7 @@ For SM-102, we will start parametrizing the charged state (SM-102H), and will ob
 Here, we will use the MolCube server (https://openbeta.molcube.com) to obtain the initial SM-102:POPC (30:70) bilayer. The molecule topology is based on the CHARMM36 force field, but of course feel free to use your favorite atomistic force field. Other web-based services such as the automated topology builder (ATB) or CHARMM-GUI can also be used to obtain reference topologies based on other AA force fields. Another important option is to look in the literature for atomistic studies of the molecule you want to parametrize: if you are lucky, somebody might have already published a validated atomistic force field for the molecule, which you can then use to create reference atomistic simulations.
 
 After signing up to the MolCube server, you can follow these steps:
+
 MolCube-Builder > Membrane Builder > name your project > select Membrane Only > Submit
 
 In Lipid Category, select "Predefined Lipid" and in Lipid Type, select "BroadPharm lipids"
