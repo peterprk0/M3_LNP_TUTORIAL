@@ -122,22 +122,21 @@ cd  ../1_AA-reference/forcefield/
 vim SM102-H.itp
 ```
 
-Open ENAP_LigParGen_COG.itp with your text editor of choice and change the values on the 8th column under the [ atoms ] directive to an equal value (of, for example, 1.0). This column defines the atom mass in a GROMACS topology file. Now prepare a new top file which includes it:
+Open SM102-H.itp with your text editor of choice and change the values on the 8th column under the [ atoms ] directive to an equal value (of, for example, 1.0). This column defines the atom mass in a GROMACS topology file. Now, go back to the `3_mapped` folder:
 
 ```
-cp  ../1_AA-reference/system.top                      system_COG.top
-sed -i 's/ENAP_LigParGen.itp/ENAP_LigParGen_COG.itp/' system_COG.top
+cd ../../3_mapped
 ```
 You can now run the script:
 
 ```
-bash 3_map_trajectory_COG.sh
+bash 3_map_trajectory_COG.sh (Just make sure to select the SM102 group, when asked)
 ```
 which will:
 
   1. first make sure that the AA trajectory is whole, i.e., your molecule of interest is not split by the periodic boundary conditions in one or more frames in the trajectory file (the gmx trjconv -pbc whole ... command);
   2. subsequently create a AA-COG.tpr, which will be used for the COG mapping in the following step (the gmx grompp -p ... command);
-  3. finally, map the AA trajectory to CG resolution: the gmx traj -f... command contained in 3_map_trajectory_COG.sh will do COG-mapping because it uses the AA-COG.tpr.
+  3. finally, map the AA trajectory to CG resolution (`mapped.xtc`): the gmx traj -f... command contained in 3_map_trajectory_COG.sh will do COG-mapping because it uses the AA-COG.tpr.
 
 
 ## 4) Create the initial CG `itp` and `tpr` files
