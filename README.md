@@ -17,15 +17,15 @@ Files required and worked examples for this tutorial can be downloaded here.
 
 [4) Create the initial CG itp and tpr files](#4-create-the-initial-cg-itp-and-tpr-files)
 
-5) Generate target CG distributions from the CG mapped trajectory
+[5) Generate target CG distributions from the CG mapped trajectory](#5-generate-target-cg-bonded-parameters-distributions-from-the-cg-mapped-trajectory)
 
-6) Create the CG simulation
+[6) Create the CG simulation](#6-create-the-cg-simulation)
 
-7) Optimize CG bonded parameters
+[7) Optimize CG bonded parameters](#7-optimize-cg-bonded-parameters)
 
-8) Comparison to experimental results, further refinements, and final considerations
+[8) Comparison to experimental results, further refinements, and final considerations](#8-comparison-to-experimental-results-further-refinements-and-final-considerations)
 
-References and notes
+[References and notes](#references-and-notes)
 
 
 ## Introduction
@@ -187,6 +187,8 @@ The script will:
 ## 5) Generate target CG bonded parameters distributions from the CG mapped trajectory
 
 We need to obtain the parameters of the bonded interactions (bonds, constraints, angles, proper and improper dihedrals) which we want in our CG model from our mapped-to-CG atomistic simulations from step 3). However, which bonded terms do we need to have? Let's go back to the drawing table and identify between which beads there should be bonded interactions.
+
+### 5.1) On the choice of bonded terms for the CG model
 
 Having decided on the bonded terms to use, they must now be defined in the `itp` file under the `[ bonds ]`, `[ constraints ]`, `[ angles ]`, and `[ dihedrals ]` entries. In general, each bonded potential is defined by stating the atom number of the particles involved, the type of potential involved, and then the parameters involved in the potential, such as reference bond lengths/angle values or force constants. This definition is highly dependent on the type of potentials employed and, as such, users should always reference the [GROMACS manual for specific details](https://manual.gromacs.org/documentation/current/reference-manual/topologies/topology-file-formats.html). Here, we will use this example to cover the most common potentials used in defining Martini topologies.
 
