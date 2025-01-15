@@ -85,7 +85,7 @@ Mapping, i.e., splitting the molecule in building blocks to be described by CG b
   * fully branched fragments should usually use beads of smaller size (the rational being that the central atom of a branched group is buried, that is, it is not exposed to the environment, reducing its influence on the interactions); for example, a neopentane group contains 5 non-hydrogen atoms but, as it is fully branched, you can safely model it as a regular bead.
 
 <p align="center">
-<img src="SM102_MAPPING.tif" width="500" alt="Mapping AA to CG">
+<img src="SM102_MAPPING.jpg" width="500" alt="Mapping AA to CG">
 </p>
 
 A good idea to settle on a mapping is to draw your molecule a few times on a piece of paper, come up with several mappings, compare them, and choose the one that best fulfills the guidelines outlined above.
@@ -99,7 +99,7 @@ Instead of creating an index file by hand from scratch, an initial AA-to-CG inde
 
 Before you get to it: an important change with respect to Martini 2.x is the fact that now hydrogen atoms are taken into account to determine the relative position of the beads when mapping an atomistic structure to CG resolution [1]-[2] - more on this later in this Section. This should be reflected in your AA-to-CG index file, that is, your index should also contain the hydrogens (in CGbuilder terms, click also on the hydrogens!). The general rule is to map a certain hydrogen atom to the bead which contains the non-hydrogen atom it is attached to.
 
-You can now try to map the ENAP_LigParGen.pdb via CGbuilder. Once done, download the files that CGbuilder creates - ndx, map, and gro - to the 2_atom-to-bead-mapping folder:
+You can now try to map the SM102_one.gro (which we included in the `2_atom-to-bead-mapping` directory) via CGbuilder. Once done, download the files that CGbuilder creates - ndx, map, and gro - to the 2_atom-to-bead-mapping folder:
 
 ```
 cd ../2_atom-to-bead-mapping/
