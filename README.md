@@ -130,7 +130,7 @@ cd ../../3_mapped
 You can now run the script:
 
 ```
-bash 3_map_trajectory_COG.sh (Just make sure to select the SM102 group, when asked)
+bash 3_map_trajectory_COG.sh (Just make sure to select the SM102-H group, when asked)
 ```
 which will:
 
@@ -149,26 +149,28 @@ The first entry in the `itp` is the `[ moleculetype ]`, one line containing the 
 ```
 [ moleculetype ]
 ; molname    nrexcl
-  ENAP         1
+  SMH         1
 ```
 The second entry in the `itp` file is `[ atoms ]`, where each of the particles that make up the molecule are defined. One line entry per particle is defined, containing the *beadnumber, beadtype, residuenumber, residuename, beadname, chargegroup, charge, and mass*. For each bead we can freely define a beadname. The residue number and residue name will be the same for all beads in small molecules, such as in this example.
 
-In Martini, we must also assign a bead type for each of the beads. This assignment follows the "Martini 3 Bible" (from Refs. [1] and [2]), where initial bead types are assigned based on the underlying chemical building blocks. **You can find the "Martini 3 Bible" in the form of a table at this [link](https://github.com/ricalessandri/Martini3-small-molecules/blob/main/tutorials/building_block_table.pdf)**. In this example, bead number 1 represents the ethyl group substituent; according to the "Martini 3 Bible" ethyl groups are represented by TC3 beads. Check the table yourself to see which bead types to use to describe the remaining beads. For a lengthier discussion of bead choices, see the final section of this tutorial.
+In Martini, we must also assign a bead type for each of the beads. This assignment follows the "Martini 3 Ionizable Lipids" (from Ref. [X]). **You can find a list of beadtypes for other functional groups in the "Martini 3 Bible" in the form of a table at this [link](https://github.com/ricalessandri/Martini3-small-molecules/blob/main/tutorials/building_block_table.pdf)**. In this example, bead number 1 represents the hydroxy group with one carbon attached (and its hydrogens); according to the ""Martini 3 Ionizable Lipids" paper this group is represented by the TP1 bead. Check the "Martini 3 Bible" and the ILs parametrized in the "Martini Ionizable Lipids" paper  to see which bead types to use to describe the remaining beads. For a lengthier discussion of bead choices, see the final section of this tutorial.
 
-Each bead will also have its own charge, which in this example will be 0 for all beads. Mass is usually not specified in Martini; in this way, default masses of 72, 54, and 36 a.m.u. are used for R-, S-, and T-beads, respectively. However, when defined the mass of the beads is typically the sum of the mass of the underlying atoms.
+Each bead will also have its own charge, which in this example will be 0 for all beads except for the NP bead (bead type SQ2p), a tertiary amine. Mass is usually not specified in Martini; in this way, default masses of 72, 54, and 36 a.m.u. are used for R-, S-, and T-beads, respectively. However, when defined the mass of the beads is typically the sum of the mass of the underlying atoms.
 
 For our example, the atom entry for our first bead would be:
 ```
 [ atoms ]
 ; nr type resnr residue atom cgnr charge mass
-   1  TC2   0    ENAP   C1    1    0     
+   1  TP1   0    SMH    OH    1    0
+   2  SQ2p  0    SMH    NP    2    1
 ...
 ```
-These first two entries in the `itp` file are mandatory and make up a basic `itp`. Finish building your initial CG itp entries and name the file `ENAP_initial.itp`. The `[ moleculetype ]` and `[ atoms ]` entries are typically followed by entries which define the bonded parameters: `[ bonds ]`, `[ constraints ]`, `[ angles ]`, and `[ dihedrals ]`. For now, you do not need to care about the bonded entries, have a look at the next section **(5)**) for considerations about which bonded terms you will need and how to define them.
+These first two entries in the `itp` file are mandatory and make up a basic `itp`. Finish building your initial CG itp entries and name the file `SM102-H_initial.itp`. The `[ moleculetype ]` and `[ atoms ]` entries are typically followed by entries which define the bonded parameters: `[ bonds ]`, `[ constraints ]`, `[ angles ]`, and `[ dihedrals ]`. For now, you do not need to care about the bonded entries, have a look at the next section **(5)**) for considerations about which bonded terms you will need and how to define them.
 
-Before going onto the next step, we need a CG `tpr` file to generate the distributions of the bonds, angles, and dihedrals from the mapped trajectory. To do this, move to the directory `4_initial-CG`, where you should place the `ENAP_initial.itp` and that also contains a `system_CG.top`, the `martini_v3.0.0.itp` and a `martini.mdp` and run the script:
+Before going onto the next step, we need a CG `tpr` file to generate the distributions of the bonds, angles, and dihedrals from the mapped trajectory. To do this, move to the directory `4_initial-CG`, where you should place the `SM102-H_initial.itp` and that also contains a `system_CG.top`, the `martini_v3.0.0.itp` and a `martini.mdp`. Don't forget to add the new `SM102-H_initial.itp` in the `system_CG.top` header, and then run the script:
 ```
 cd   4_initial-CG
+(create the `SM102-H_initial.itp` and include it at the `system_CG.top` header)
 bash 4_create_CG_tpr.sh
 ```
 The script will:
