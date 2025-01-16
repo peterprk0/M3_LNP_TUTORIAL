@@ -185,23 +185,41 @@ We need to obtain the parameters of the bonded interactions (bonds, constraints,
 
 ### 5.1) On the choice of bonded terms for the CG model
 
-Having decided on the bonded terms to use, they must now be defined in the `itp` file under the `[ bonds ]`, `[ constraints ]`, `[ angles ]`, and `[ dihedrals ]` entries. In general, each bonded potential is defined by stating the atom number of the particles involved, the type of potential involved, and then the parameters involved in the potential, such as reference bond lengths/angle values or force constants. This definition is highly dependent on the type of potentials employed and, as such, users should always reference the [GROMACS manual for specific details](https://manual.gromacs.org/documentation/current/reference-manual/topologies/topology-file-formats.html). Here, we will use this example to cover the most common potentials used in defining Martini topologies.
+  OH -  NP -  CB - GLB - CBX - CB1 - CB2
+        |                 |
+        |                CB3 - CB4
+        |
+        CA - GLA - CA1 - CA2 - CA3
 
-Bonds are defined under `[ bonds ]` by stating the atom number of the particles involved, the type of bond potential (in this case, type 1, a regular harmonic bond) followed by the reference bond length and force constant. Constraints are defined similarly to bonds, under the `[ constraints ]` section, with the exception that no force constant is needed. If we use bond 1-2 and constraint 2-3 as examples, your `itp` should look something like this:
+
+  1  -  2  -  8  -  9  -  10 - 11 - 12
+        |                  |
+        |                 13 - 14
+        |
+        3  -  4  -  5  -  6  -  7
+
+
+Having decided on the bonded terms to use (bonds, constraints, angles, proper and improper dihedrals), they must now be defined in the `itp` file under the `[ bonds ]`, `[ constraints ]`, `[ angles ]`, and `[ dihedrals ]` entries. In general, each bonded potential is defined by stating the atom number of the particles involved, the type of potential involved, and then the parameters involved in the potential, such as reference bond lengths/angle values or force constants. This definition is highly dependent on the type of potentials employed and, as such, users should always reference the [GROMACS manual for specific details](https://manual.gromacs.org/documentation/current/reference-manual/topologies/topology-file-formats.html).
+
+Bonds are defined under [ bonds ] by stating the atom number of the particles involved, the type of bond potential (in this case, type 1, a regular harmonic bond) followed by the reference bond length and force constant. If we use bond 1-2 and 2-3 as examples, your itp should look something like this:
+
 ```
 [bonds]
 ; i  j  funct length    kb
-  1  2   1     0.260   20000 
+  1  2   1     0.32   5000
+  2  3   1     0.32   5000 
 ...
 ```
-Angles and dihedrals follow the same strategy, stating the atom number of the particles involved, the type of potential, and, in this case, the reference angle and force constant. While there are no angles defined in this example, we have 3 improper dihedral potentials in place (regular and improper dihedral potentials correspond to dihedral function types 1 and 2, respectively):
+
+Angles and dihedrals follow the same strategy, stating the atom number of the particles involved, the type of potential, and, in this case, the reference angle and force constant. While there are no  dihedral parameters needed in this case, if you do need to add them for other molecules, you can check out the [Parametrization of a new small molecule](https://github.com/ricalessandri/Martini3-small-molecules/blob/main/tutorials/M3tutorials--parameterizing-a-new-small-molecule.md) Martini 3 Tutorial, Section 5.1 for guidance. Let's add one angle and you can try adding the rest:
 ```
 [angles]
-; i  j  funct length
-  2  3   1     0.260 
+; i  j  k  funct  angle     force c.
+  1  2  3    1     108        15
 ...
 ```
 Using initial guesses for the reference bond lengths/angles and force constants you can now create a complete topology for the target molecule. These initial guesses will be improved upon in a further section by comparing the AA and CG bonded distributions and adjusting these values.
+
 
 ### 5.2) Index files and generation of target distributions
 
