@@ -185,6 +185,7 @@ We need to obtain the parameters of the bonded interactions (bonds, constraints,
 
 ### 5.1) On the choice of bonded terms for the CG model
 
+```
   OH -  NP -  CB - GLB - CBX - CB1 - CB2
         |                 |
         |                CB3 - CB4
@@ -197,7 +198,7 @@ We need to obtain the parameters of the bonded interactions (bonds, constraints,
         |                 13 - 14
         |
         3  -  4  -  5  -  6  -  7
-
+```
 
 Having decided on the bonded terms to use (bonds, constraints, angles, proper and improper dihedrals), they must now be defined in the `itp` file under the `[ bonds ]`, `[ constraints ]`, `[ angles ]`, and `[ dihedrals ]` entries. In general, each bonded potential is defined by stating the atom number of the particles involved, the type of potential involved, and then the parameters involved in the potential, such as reference bond lengths/angle values or force constants. This definition is highly dependent on the type of potentials employed and, as such, users should always reference the [GROMACS manual for specific details](https://manual.gromacs.org/documentation/current/reference-manual/topologies/topology-file-formats.html).
 
