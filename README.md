@@ -267,10 +267,10 @@ cd sm102h-parametrization/6_CG-takeCURRENT
 cp ../4_initial-CG/molecule.gro      .
 cp ../4_initial-CG/SM102-H_initial.itp  SM102-H_take1.itp
 [adjust SM102-H_take1.itp with input from the previous step]
-bash prepare_CG_1mol_system.sh  molecule.gro  box_CG_W_eq.gro  W  1  100
+bash prepare_CG_1mol_system.sh  molecule.gro  W.gro  W  1  100
 ```
 
-where the command will run an energy-minimization, followed by an NPT equilibration, and by an MD run of 50 ns (inspect the script and the various `mdp` files to know more) for the Martini system in water.
+where the command will run an energy-minimization, followed by an NPT equilibration, and by an MD run of 300 ns (inspect the script and the various `mdp` files to know more) for the Martini system in water.
 
 Once the MD is run, you can use the index files generated for the mapped trajectory to generate the distributions of the CG trajectory:
 ```
@@ -284,14 +284,16 @@ which will produce files as done by the `5_generate_target_distr.sh` in the prev
 
 You can now plot the distributions against each other and compare. You can use the following scripts:
 ```
-cd ENAP-in-water
-gnuplot plot_bonds_tutorial_4x2.gnu 
-gnuplot plot_dihedrals_tutorial_4x1.gnu 
+cd sm102h-parametrization
+python3 plot_CG_AA_bonds_graphs.py
+python3 plot_CG_AA_angles_graphs.py
+python3 plot_CG_AA_dihedrals_graphs.py
 ```
 The plots produced should look like the following, for bonds:
 
-**FIGURE**
-
+<p align="center">
+<img src="SM102_MAPPING.jpg" width="500" alt="Mapping AA to CG">
+</p>
 and dihedrals (AA is in blue, Martini is in red):
 
 **FIGURE**
