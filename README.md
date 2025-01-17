@@ -64,11 +64,11 @@ ls
 
 Check out the files there. Essentially, you would need the files that are necessary for generating the production run .tpr
 
-Have a look in the `forcefield` directory and examine the `SM102-H.itp` file, which is the topology based on CHARMM36. Soon, in step 3, we will come back here and change the mass values.
+Have a look in the `forcefield` directory and examine the `SM102-H_AA.itp` file, which is the topology based on CHARMM36. Soon, in step 3, we will come back here and change the mass values.
 
 ```
 cd  forcefield
-vim SM102-H.itp
+vim SM102-H_AA.itp
 ```
 
 ## 2) Atom-to-bead mapping
@@ -99,7 +99,7 @@ Instead of creating an index file by hand from scratch, an initial AA-to-CG inde
 
 Before you get to it: an important change with respect to Martini 2.x is the fact that now hydrogen atoms are taken into account to determine the relative position of the beads when mapping an atomistic structure to CG resolution [1]-[2] - more on this later in this Section. This should be reflected in your AA-to-CG index file, that is, your index should also contain the hydrogens (in CGbuilder terms, click also on the hydrogens!). The general rule is to map a certain hydrogen atom to the bead which contains the non-hydrogen atom it is attached to.
 
-You can now try to map the SM102_one.gro (which we included in the `2_atom-to-bead-mapping` directory) via CGbuilder. Once done, download the files that CGbuilder creates - ndx, map, and gro - to the `2_atom-to-bead-mapping` directory:
+You can now try to map the SM102H_one.gro (which we included in the `2_atom-to-bead-mapping` directory) via CGbuilder. Once done, download the files that CGbuilder creates - ndx, map, and gro - to the `2_atom-to-bead-mapping` directory:
 
 ```
 cd ../2_atom-to-bead-mapping/
@@ -119,10 +119,10 @@ Now, we took into account the hydrogens because center of geometry (COG)-based m
 
 ```
 cd  ../1_AA-reference/forcefield/
-vim SM102-H.itp
+vim SM102-H_AA.itp
 ```
 
-Open SM102-H.itp with your text editor of choice and change the values on the 8th column under the [ atoms ] directive to an equal value (of, for example, 1.0). This column defines the atom mass in a GROMACS topology file. Now, go back to the `3_mapped` folder:
+Open SM102-H_AA.itp with your text editor of choice and change the values on the 8th column under the [ atoms ] directive to an equal value (of, for example, 1.0). This column defines the atom mass in a GROMACS topology file. Now, go back to the `3_mapped` folder:
 
 ```
 cd ../../3_mapped
@@ -260,14 +260,14 @@ gmx analyze -f dihedrals_mapped/dih_0.xvg -dist dihedrals_mapped/distr_dih_0.xvg
 
 ## 6) Create the CG simulation
 
-We can now finalize the first take on the CG model, `ENAP_take1.itp`, where we can use the info contained in the `data_bonds.txt` and `data_dihedrals.txt` files to come up with better guesses for the bonded parameters:
+We can now finalize the first take on the CG model, `SM102-H_take1.itp`, where we can use the info contained in the `data_bonds.txt` and `data_dihedrals.txt` files to come up with better guesses for the bonded parameters:
 
 ```
-cd ENAP-in-water/6_CG-takeCURRENT
+cd sm102h-parametrization/6_CG-takeCURRENT
 cp ../4_initial-CG/molecule.gro      .
-cp ../4_initial-CG/ENAP_initial.itp  ENAP_take1.itp
-[adjust ENAP_take1.itp with input from the previous step]
-bash prepare_CG_1mol_system.sh  molecule.gro  box_CG_W_eq.gro  W  1
+cp ../4_initial-CG/SM102-H_initial.itp  SM102-H_take1.itp
+[adjust SM102-H_take1.itp with input from the previous step]
+bash prepare_CG_1mol_system.sh  molecule.gro  box_CG_W_eq.gro  W  1  100
 ```
 
 where the command will run an energy-minimization, followed by an NPT equilibration, and by an MD run of 50 ns (inspect the script and the various `mdp` files to know more) for the Martini system in water.
