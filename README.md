@@ -229,14 +229,14 @@ Once you have settled on the bonded terms, create index files for the bonds with
 [bond1]
   1  2
 [bond2]
-  1  4
+  2  3
 ...
 ```
 
-and similarly for angles (with triples of CG beads) and dihedrals (with quartets). Write scripts that generate distributions for all bonds, angles, and dihedrals you are interested in. For 1-ethyl-naphthalene, there are seven bonds (5 constraints and 2 bonds) and three dihedrals, as discussed. A script is also provided, so that:
+and similarly for angles (with triples of CG beads) and dihedrals (with quartets). Write scripts that generate distributions for all bonds, angles, and dihedrals you are interested in. For SM-102H, there are 13 bonds and 14 angles. A script is also provided, so that:
 ```
-cd  ENAP-in-water/5_target-distr
-[create bonds.ndx and dihedrals.ndx]
+cd  sm102h-parametrization/5_target-distr
+[create bonds.ndx, angles.ndx, and dihedrals.ndx]
 bash 5_generate_target_distr.sh
 ```
 
@@ -247,7 +247,12 @@ For each bond, the script uses the following command (in this example, the comma
 echo 0 | gmx distance -f ../3_mapped/mapped.xtc -n bonds.ndx -s ../4_initial-CG/CG.tpr -oall bonds_mapped/bond_0.xvg -xvg none
 gmx analyze -f bonds_mapped/bond_0.xvg -dist bonds_mapped/distr_bond_0.xvg -xvg none -bw 0.001
 ```
-and similarly for the first dihedral:
+and similarly for the first angle:
+```
+echo 0 | gmx angle -f ../3_mapped/mapped.xtc -n angles.ndx -ov ang_mapped/ang_0.xvg
+gmx analyze -f ang_mapped/ang_0.xvg -dist ang_mapped/distr_ang_0.xvg -xvg none -bw 1.0
+```
+and for the first dihedral:
 ```
 echo 0 | gmx angle -type dihedral -f ../3_mapped/mapped.xtc -n dihedrals.ndx -ov dihedrals_mapped/dih_0.xvg
 gmx analyze -f dihedrals_mapped/dih_0.xvg -dist dihedrals_mapped/distr_dih_0.xvg -xvg none -bw 1.0
