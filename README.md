@@ -85,7 +85,7 @@ Mapping, i.e., splitting the molecule in building blocks to be described by CG b
   * fully branched fragments should usually use beads of smaller size (the rational being that the central atom of a branched group is buried, that is, it is not exposed to the environment, reducing its influence on the interactions); for example, a neopentane group contains 5 non-hydrogen atoms but, as it is fully branched, you can safely model it as a regular bead.
 
 <p align="center">
-<img src="SM102_MAPPING.jpg" width="500" alt="Mapping AA to CG">
+<img src="SM102_MAPPING.jpg" width="700" alt="Mapping AA to CG">
 </p>
 
 A good idea to settle on a mapping is to draw your molecule a few times on a piece of paper, come up with several mappings, compare them, and choose the one that best fulfills the guidelines outlined above.
