@@ -292,19 +292,19 @@ python3 plot_CG_AA_dihedrals_graphs.py
 The plots produced should look like the following, for bonds (AA is in gray, Martini is in red):
 
 <p align="center">
-<img src="CG_AA_bonds.jpg" width="500" alt="AA-CG bond distributions">
+<img src="CG_AA_bonds.jpg" width="400" alt="AA-CG bond distributions">
 </p>
 
-for angles (AA is in gray, Martini is in red):
+for angles (AA is in gray, Martini is in blue):
 
 <p align="center">
-<img src="CG_AA_angles.jpg" width="500" alt="AA-CG angle distributions">
+<img src="CG_AA_angles.jpg" width="400" alt="AA-CG angle distributions">
 </p>
 
-and dihedrals (AA is in gray, Martini is in red):
+and dihedrals (AA is in gray, Martini is in green):
 
 <p align="center">
-<img src="CG_AA_dihedrals.jpg" width="500" alt="AA-CG dihedral distributions">
+<img src="CG_AA_dihedrals.jpg" width="400" alt="AA-CG dihedral distributions">
 </p>
 
 The agreement is very good. Note that the bimodality of the distributions of some of the dihedrals cannot be captured by the CG model. However, the size of the CG distribution will seemingly capture the two AA configurations into the single CG configuration. If the agreement is not satisfactory at the first iteration - which is likely to happen - you should play with the equilibrium value and force constants in the CG `itp` and iterate till satisfactory agreement is achieved.
@@ -317,10 +317,10 @@ The approach described so far is oriented to high-throughput applications where 
 
 To this end, we can use the Gromacs tool `gmx sasa` to compute the solvent accessible surface area (SASA) and the Connolly surface of the AA and CG models. While AA force fields can use the default `vdwradii.dat` provided by Gromacs, for CG molecules, such file needs to be modified. For this, copy the `vdwradii.dat` file from the default location to the folder where we will execute the analysis:
 ```
-cd ENAP-in-water/7_SASA
+cd sm102h-parametrization/7_SASA
 cp /usr/local/gromacs-VERSION/share/gromacs/top/vdwradii.dat  vdwradii_CG.dat
 ```
-The `vdwradii_CG.dat` file in the current folder should now be edited so as to contain the radius of the Martini 3 beads based on the atomnames (!) of your system. By the way, the radii for the Martini R-, S-, and T-beads are 0.264, 0.230, and 0.191 nm, respectively. Take a look at `ENAP-worked/7_SASA/vdwradii_CG.dat` in case of doubts.
+The `vdwradii_CG.dat` file in the current folder should now be edited so as to contain the radius of the Martini 3 beads based on the atomnames (!) of your system. By the way, the radii for the Martini R-, S-, and T-beads are 0.264, 0.230, and 0.191 nm, respectively. Take a look at `sm102h-parametrization-worked/7_SASA/vdwradii_CG.dat` in case of doubts.
 
 We also recommend using an updated `vdwradii.dat` for the atomistic reference calculations, instead of the Gromacs default. The file - that you can find among the provided files with the name vdwradii_AA.dat - uses more recent vdW radii from [Rowland and Taylor, J. Phys. Chem. 1996, 100, 7384-7391].
 
