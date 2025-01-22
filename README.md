@@ -291,20 +291,20 @@ python3 plot_CG_AA_dihedrals_graphs.py
 ```
 The plots produced should look like the following, for bonds (AA is in gray, Martini is in red):
 
-<p align="center">
-<img src="CG_AA_bonds.jpg" width="400" alt="AA-CG bond distributions">
+<p align="left">
+<img src="CG_AA_bonds.jpg" width="500" alt="AA-CG bond distributions">
 </p>
 
 for angles (AA is in gray, Martini is in blue):
 
-<p align="center">
-<img src="CG_AA_angles.jpg" width="400" alt="AA-CG angle distributions">
+<p align="left">
+<img src="CG_AA_angles.jpg" width="500" alt="AA-CG angle distributions">
 </p>
 
 and dihedrals (AA is in gray, Martini is in green):
 
-<p align="center">
-<img src="CG_AA_dihedrals.jpg" width="400" alt="AA-CG dihedral distributions">
+<p align="left">
+<img src="CG_AA_dihedrals.jpg" width="500" alt="AA-CG dihedral distributions">
 </p>
 
 The agreement is very good. Note that the bimodality of the distributions of some of the dihedrals cannot be captured by the CG model. However, the size of the CG distribution will seemingly capture the two AA configurations into the single CG configuration. If the agreement is not satisfactory at the first iteration - which is likely to happen - you should play with the equilibrium value and force constants in the CG `itp` and iterate till satisfactory agreement is achieved.
