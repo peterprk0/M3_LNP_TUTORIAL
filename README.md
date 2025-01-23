@@ -275,6 +275,7 @@ where the command will run an energy-minimization, followed by an NPT equilibrat
 Once the MD is run, you can use the index files generated for the mapped trajectory to generate the distributions of the CG trajectory:
 ```
 cp ../5_target-distr/bonds.ndx .
+cp ../5_target-distr/angles.ndx .
 cp ../5_target-distr/dihedrals.ndx .
 bash 6_generate_CG_distr.sh
 ```
