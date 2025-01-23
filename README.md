@@ -264,7 +264,7 @@ We can now finalize the first take on the CG model, `SM102-H_take1.itp`, where w
 
 ```
 cd sm102h-parametrization/6_CG-takeCURRENT
-cp ../4_initial-CG/molecule.gro      .
+cp ../4_initial-CG/molecule.gro .
 cp ../4_initial-CG/SM102-H_initial.itp  SM102-H_take1.itp
 [adjust SM102-H_take1.itp with input from the previous step]
 bash prepare_CG_1mol_system.sh  molecule.gro  W.gro  W  1  100
