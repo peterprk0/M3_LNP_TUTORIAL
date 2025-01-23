@@ -62,7 +62,7 @@ cd     sm102h-parametrization/1_AA-reference
 ls
 ```
 
-Check out the files there. Essentially, you would need the files that are necessary for generating the production run .tpr
+Check out the files there. Essentially, you would need the files that are necessary for generating the production run `.tpr`
 
 Have a look in the `forcefield` directory and examine the `SM102-H_AA.itp` file, which is the topology based on CHARMM36. Soon, in step 3, we will come back here and change the mass values.
 
