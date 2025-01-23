@@ -291,20 +291,20 @@ python3 plot_CG_AA_dihedrals_graphs.py
 ```
 The plots produced should look like the following, for bonds (AA is in gray, Martini is in red):
 
-<p align="left">
-<img src="CG_AA_bonds.jpg" width="500" alt="AA-CG bond distributions">
+<p align="center">
+<img src="CG_AA_bonds.jpg" width="700" alt="AA-CG bond distributions">
 </p>
 
 for angles (AA is in gray, Martini is in blue):
 
-<p align="left">
-<img src="CG_AA_angles.jpg" width="500" alt="AA-CG angle distributions">
+<p align="center">
+<img src="CG_AA_angles.jpg" width="700" alt="AA-CG angle distributions">
 </p>
 
 and dihedrals (AA is in gray, Martini is in green):
 
-<p align="left">
-<img src="CG_AA_dihedrals.jpg" width="500" alt="AA-CG dihedral distributions">
+<p align="center">
+<img src="CG_AA_dihedrals.jpg" width="700" alt="AA-CG dihedral distributions">
 </p>
 
 The agreement is very good. Note that the bimodality of the distributions of some of the dihedrals cannot be captured by the CG model. However, the size of the CG distribution will seemingly capture the two AA configurations into the single CG configuration. If the agreement is not satisfactory at the first iteration - which is likely to happen - you should play with the equilibrium value and force constants in the CG `itp` and iterate till satisfactory agreement is achieved.
@@ -339,7 +339,7 @@ vmd  -m  AA/LIG-AA-min-IL_01.gro  AA/surf-AA-IL_01.pdb  CG/surf-CG-IL_01.pdb
 This should give you some of the views you find rendered below. Below you find also the plot of the distribution of the SASA along the trajectory - `distr-SASA-AA.xvg` and `distr-SASA-CG.xvg` (AA is in gray, Martini is in red):
 
 <p align="center">
-<img src="SASA_distribution_AA-CG.jpg" width="500" alt="AA-CG bond distributions.jpg">
+<img src="SASA_distribution_AA-CG.jpg" width="800" alt="AA-CG bond distributions.jpg">
 </p>
 
 The SASA distributions show a discrepancy of about 5% (the average CG SASA is about 5% smaller than the AA one - see `SASA-AA-individual-IL_01.xvg` and `SASA-CG-individual-IL_01.xvg`), which is acceptable, but not ideal. Inspecting the Connolly surfaces (AA in gray, CG in blue) gives you a clearer picture: while the naphthalene moiety on average seems to be captured quite accurately by the CG model, the T-bead 1 does seem not to account for the whole molecular volume of the ethyl group. One way to improve this could be to lengthen bonds 1-2, and 1-4.
