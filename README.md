@@ -64,7 +64,7 @@ ls
 
 Check out the files there. Essentially, you would need the files that are necessary for generating the production run `.tpr`
 
-Have a look in the `forcefield` directory and examine the `SM102-H_AA.itp` file, which is the topology based on CHARMM36. Soon, in step 3, we will come back here and change the mass values.
+Have a look in the `forcefield` directory and examine the `SM102H_AA.itp` file, which is the topology based on CHARMM36. Soon, in step 3, we will come back here and change the mass values.
 
 ```
 cd  forcefield
@@ -119,10 +119,10 @@ Now, we took into account the hydrogens because center of geometry (COG)-based m
 
 ```
 cd  ../1_AA-reference/forcefield/
-vim SM102-H_AA.itp
+vim SM102H_AA.itp
 ```
 
-Open SM102-H_AA.itp with your text editor of choice and change the values on the 8th column under the [ atoms ] directive to an equal value (of, for example, 1.0). This column defines the atom mass in a GROMACS topology file. Now, go back to the `3_mapped` folder:
+Open SM102H_AA.itp with your text editor of choice and change the values on the 8th column under the [ atoms ] directive to an equal value (of, for example, 1.0). This column defines the atom mass in a GROMACS topology file. Now, go back to the `3_mapped` folder:
 
 ```
 cd ../../3_mapped
@@ -130,7 +130,7 @@ cd ../../3_mapped
 You can now run the script:
 
 ```
-bash 3_map_trajectory_COG.sh (Just make sure to select the SM102-H group [25499H or SMH], when asked)
+bash 3_map_trajectory_COG.sh (Just make sure to select the SM102H group [25499H or SMH], when asked)
 ```
 which will:
 
@@ -165,12 +165,12 @@ For our example, the atom entry for our first bead would be:
    2  SQ2p  0    SMH    NP    2    1
 ...
 ```
-These first two entries in the `itp` file are mandatory and make up a basic `itp`. Finish building your initial CG itp entries and name the file `SM102-H_initial.itp`. The `[ moleculetype ]` and `[ atoms ]` entries are typically followed by entries which define the bonded parameters: `[ bonds ]`, `[ constraints ]`, `[ angles ]`, and `[ dihedrals ]`. For now, you do not need to care about the bonded entries, have a look at the next section **(5)**) for considerations about which bonded terms you will need and how to define them.
+These first two entries in the `itp` file are mandatory and make up a basic `itp`. Finish building your initial CG itp entries and name the file `SM102H_initial.itp`. The `[ moleculetype ]` and `[ atoms ]` entries are typically followed by entries which define the bonded parameters: `[ bonds ]`, `[ constraints ]`, `[ angles ]`, and `[ dihedrals ]`. For now, you do not need to care about the bonded entries, have a look at the next section **(5)**) for considerations about which bonded terms you will need and how to define them.
 
-Before going onto the next step, we need a CG `tpr` file to generate the distributions of the bonds, angles, and dihedrals from the mapped trajectory. To do this, move to the directory `4_initial-CG`, where you should place the `SM102-H_initial.itp` and that also contains a `system_CG.top`, the `martini_v3.0.0.itp` and a `martini.mdp`. Don't forget to add the new `SM102-H_initial.itp` in the `system_CG.top` header, and then run the script:
+Before going onto the next step, we need a CG `tpr` file to generate the distributions of the bonds, angles, and dihedrals from the mapped trajectory. To do this, move to the directory `4_initial-CG`, where you should place the `SM102H_initial.itp` and that also contains a `system_CG.top`, the `martini_v3.0.0.itp` and a `martini.mdp`. Don't forget to add the new `SM102H_initial.itp` in the `system_CG.top` header, and then run the script:
 ```
 cd   4_initial-CG
-(create the `SM102-H_initial.itp` and include it at the `system_CG.top` header)
+(create the `SM102H_initial.itp` and include it at the `system_CG.top` header)
 bash 4_create_CG_tpr.sh
 ```
 The script will:
@@ -260,13 +260,13 @@ gmx analyze -f dihedrals_mapped/dih_0.xvg -dist dihedrals_mapped/distr_dih_0.xvg
 
 ## 6) Create the CG simulation
 
-We can now finalize the first take on the CG model, `SM102-H_take1.itp`, where we can use the info contained in the `data_bonds.txt` and `data_dihedrals.txt` files to come up with better guesses for the bonded parameters:
+We can now finalize the first take on the CG model, `SM102H_take1.itp`, where we can use the info contained in the `data_bonds.txt` and `data_dihedrals.txt` files to come up with better guesses for the bonded parameters:
 
 ```
 cd sm102h-parametrization/6_CG-takeCURRENT
 cp ../4_initial-CG/molecule.gro .
-cp ../4_initial-CG/SM102-H_initial.itp  SM102-H_take1.itp
-[adjust SM102-H_take1.itp with input from the previous step]
+cp ../4_initial-CG/SM102H_initial.itp  SM102H_take1.itp
+[adjust SM102H_take1.itp with input from the previous step]
 bash prepare_CG_1mol_system.sh  molecule.gro  W.gro  W  1  100
 ```
 
