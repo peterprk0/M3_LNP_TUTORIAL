@@ -99,7 +99,7 @@ Instead of creating an index file by hand from scratch, an initial AA-to-CG inde
 
 Before you get to it: an important change with respect to Martini 2.x is the fact that now hydrogen atoms are taken into account to determine the relative position of the beads when mapping an atomistic structure to CG resolution [1]-[2] - more on this later in this Section. This should be reflected in your AA-to-CG index file, that is, your index should also contain the hydrogens (in CGbuilder terms, click also on the hydrogens!). The general rule is to map a certain hydrogen atom to the bead which contains the non-hydrogen atom it is attached to.
 
-You can now try to map the SM102H_one.gro (which we included in the `2_atom-to-bead-mapping` directory) via CGbuilder. Once done, download the files that CGbuilder creates - ndx, map, and gro - to the `2_atom-to-bead-mapping` directory:
+You can now try to map the `SM102H_one.gro` (which we included in the `2_atom-to-bead-mapping` directory) via CGbuilder. Once done, download the files that CGbuilder creates - ndx, map, and gro - to the `2_atom-to-bead-mapping` directory:
 
 ```
 cd ../2_atom-to-bead-mapping/
