@@ -161,8 +161,8 @@ For our example, the atom entry for our first bead would be:
 ```
 [ atoms ]
 ; nr type resnr residue atom cgnr charge mass
-   1  TP1   0    SMH    OH    1    0
-   2  SQ2p  0    SMH    NP    2    1
+   1  TP1   0    SMH    OHC    1    0
+   2  SQ2p  0    SMH    N3C    2    1
 ...
 ```
 These first two entries in the `itp` file are mandatory and make up a basic `itp`. Finish building your initial CG itp entries and name the file `SM102H_initial.itp`. The `[ moleculetype ]` and `[ atoms ]` entries are typically followed by entries which define the bonded parameters: `[ bonds ]`, `[ constraints ]`, `[ angles ]`, and `[ dihedrals ]`. For now, you do not need to care about the bonded entries, have a look at the next section **(5)**) for considerations about which bonded terms you will need and how to define them.
@@ -186,11 +186,11 @@ We need to obtain the parameters of the bonded interactions (bonds, constraints,
 ### 5.1) On the choice of bonded terms for the CG model
 
 ```
-  OH -  NP -  CB - GLB - CBX - CB1 - CB2
+ OHC - N3C - C1B - C2B - ET2 - C1C - C2C
         |                 |
-        |                CB3 - CB4
+        |                C1D - C2D
         |
-        CA - GLA - CA1 - CA2 - CA3
+       C1A - ET1 - C2A - C3A - C4A
 
 
   1  -  2  -  8  -  9  -  10 - 11 - 12
@@ -207,8 +207,8 @@ Bonds are defined under [ bonds ] by stating the atom number of the particles in
 ```
 [bonds]
 ; i  j  funct length    kb
-  1  2   1     0.32   5000
-  2  3   1     0.32   5000 
+  1  2   1     0.31   2800
+  2  3   1     0.37   2800 
 ...
 ```
 
@@ -216,7 +216,7 @@ Angles and dihedrals follow the same strategy, stating the atom number of the pa
 ```
 [angles]
 ; i  j  k  funct  angle     force c.
-  1  2  3    1     108        15
+  1  2  3    1     108        13.5
 ...
 ```
 Using initial guesses for the reference bond lengths/angles and force constants you can now create a complete topology for the target molecule. These initial guesses will be improved upon in a further section by comparing the AA and CG bonded distributions and adjusting these values.
