@@ -130,7 +130,7 @@ cd ../../3_mapped
 You can now run the script:
 
 ```
-bash 3_map_trajectory_COG.sh (Just make sure to select the SM102-H group, when asked)
+bash 3_map_trajectory_COG.sh (Just make sure to select the SM102-H group [25499H], when asked)
 ```
 which will:
 
