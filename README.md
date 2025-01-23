@@ -153,7 +153,7 @@ The first entry in the `itp` is the `[ moleculetype ]`, one line containing the 
 ```
 The second entry in the `itp` file is `[ atoms ]`, where each of the particles that make up the molecule are defined. One line entry per particle is defined, containing the *beadnumber, beadtype, residuenumber, residuename, beadname, chargegroup, charge, and mass*. For each bead we can freely define a beadname. The residue number and residue name will be the same for all beads in small molecules, such as in this example.
 
-In Martini, we must also assign a bead type for each of the beads. This assignment follows the "Martini 3 Ionizable Lipids" (from Ref. [X]). **You can find a list of beadtypes for other functional groups in the "Martini 3 Bible" in the form of a table at this [link](https://github.com/ricalessandri/Martini3-small-molecules/blob/main/tutorials/building_block_table.pdf)**. In this example, bead number 1 represents the hydroxy group with one carbon attached (and its hydrogens); according to the "Martini 3 Ionizable Lipids" paper this group is represented by the TP1 bead. Check the "Martini 3 Bible" and the ILs parametrized in the "Martini Ionizable Lipids" paper  to see which bead types to use to describe the remaining beads. For a lengthier discussion of bead choices, see the final section of this tutorial.
+In Martini, we must also assign a bead type for each of the beads. This assignment follows the "Martini 3 Ionizable Lipids" (from Ref. [9]). **You can find a list of beadtypes for other functional groups in the "Martini 3 Bible" in the form of a table at this [link](https://github.com/ricalessandri/Martini3-small-molecules/blob/main/tutorials/building_block_table.pdf)**. In this example, bead number 1 represents the hydroxy group with one carbon attached (and its hydrogens); according to the "Martini 3 Ionizable Lipids" paper this group is represented by the TP1 bead. Check the "Martini 3 Bible" and the ILs parametrized in the "Martini Ionizable Lipids" paper  to see which bead types to use to describe the remaining beads. For a lengthier discussion of bead choices, see the final section of this tutorial.
 
 Each bead will also have its own charge, which in this example will be 0 for all beads except for the NP bead (bead type SQ2p), a tertiary amine. Mass is usually not specified in Martini; in this way, default masses of 72, 54, and 36 a.m.u. are used for R-, S-, and T-beads, respectively. However, when defined the mass of the beads is typically the sum of the mass of the underlying atoms.
 
@@ -354,6 +354,11 @@ The SASA distributions show a discrepancy of about 5% (the average CG SASA is ab
 
 * Depending on your application, you may want to include other validation targets, besides free energies of transfer. These can allow you to fine-tune and optimize bead type choices and bonded parameters. Below a non-exhaustive list of potential target properties:
 
+  - if molecular stacking or packing are of importance, one can use use dimerization free energy landscapes as reference [2];
+  - miscibility of binary mixtures has been successfully employed in the parameterization of martini CG solvent models [1] - either by qualitative assessing the mixing behavior or by computing the excess free energy of mixing [1]-[2];
+  - other experimental data such as the density of pure liquids or phase transition temperatures [10] can be also used;
+  - finally, more specific references are also used, such as the hydrogen-bonding strengths and specificity of interactions for nucleobases [1], following the Martini 2 DNA work [11].
+
 ##  References and notes
 
 [1] P.C.T. Souza, et al., [Nat. Methods 2021, DOI: 10.1038/s41592-021-01098-3](https://www.nature.com/articles/s41592-021-01098-3).
@@ -372,14 +377,9 @@ The SASA distributions show a discrepancy of about 5% (the average CG SASA is ab
 
 [8] The Gromacs tool `gmx traj` won't allow to choose more than one group unless one passes the flag `-com`. Neither `-nocom` or omitting the flag altogether (which should give `-nocom`) work.
 
-[9] M.N. Melo, H.I. Ingolfsson, S.J. Marrink, [J. Chem. Phys. 2015, 143, 243152](https://pubs.aip.org/aip/jcp/article/143/24/243152/966130/Parameters-for-Martini-sterols-and-hopanoids-based).
+[9] Kjølbye LR, Valério M, Paloncýová M, Borges-Araújo L, Pestana-Nobles R, Grünewald F, et al. Martini 3 building blocks for Lipid Nanoparticle design. [ChemRxiv. 2025](https://chemrxiv.org/engage/chemrxiv/article-details/677583c76dde43c908ffe86b)
 
-[10] S. Natesan, et al., [J. Chem. Inf. Model. 2013, 53, 6, 1424-1435](https://pubs.acs.org/doi/full/10.1021/ci400112k).
+[10] L.I. Vazquez-Salazar, M. Selle, et al., [Green Chem. 2020, DOI: 10.1039/D0GC01823F](https://pubs.rsc.org/en/content/articlelanding/2020/gc/d0gc01823f)
 
-[11] L.I. Vazquez-Salazar, M. Selle, et al., [Green Chem. 2020, DOI: 10.1039/D0GC01823F](https://pubs.rsc.org/en/content/articlelanding/2020/gc/d0gc01823f).
-
-[12] J.J. Uusitalo, et al., [J. Chem. Theory Comput. 2015, 11, 8, 3932-3945](https://pubs.acs.org/doi/10.1021/acs.jctc.5b00286).
-  - if molecular stacking or packing are of importance, one can use use dimerization free energy landscapes as reference [2];
-  - miscibility of binary mixtures has been successfully employed in the parameterization of martini CG solvent models [1] - either by qualitative assessing the mixing behavior or by computing the excess free energy of mixing [1]-[2];
-  - other experimental data such as the density of pure liquids or phase transition temperatures [11] can be also used;
-  - finally, more specific references are also used, such as the hydrogen-bonding strengths and specificity of interactions for nucleobases [1], following the Martini 2 DNA work [12].
+[11] J.J. Uusitalo, et al., [J. Chem. Theory Comput. 2015, 11, 8, 3932-3945](https://pubs.acs.org/doi/10.1021/acs.jctc.5b00286).
+  
