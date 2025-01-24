@@ -346,11 +346,12 @@ This should give you some of the views you find rendered below. Below you find a
 The CG SASA and AA SASA distributions show very good agreement overall. A good approach would be to calculate individually the SASA of each lipid and then compare the average of all the AA SASA with the average of all the CG SASA. You can use a script in the `sm102h-parametrization-worked/7_SASA/AVG_of_AVG.py`. You should put the script in the `sm102h-parametrization/7_SASA/AA` and in the `sm102h-parametrization/7_SASA/CG` folders.
 
 ```
-### (sm102h-parametrization/7_SASA/AA)
+(in the folder: sm102h-parametrization/7_SASA/AA)
 cp  sm102h-parametrization-worked/7_SASA/AVG_of_AVG.py .
 python3 AVG_of_AVG.py
 ```
 
+And then repeat that in the `sm102h-parametrization/7_SASA/CG` folder, and compare the overall SASA values.
 You can also inspecting the Connolly surfaces (AA in gray, CG in blue). It gives you a clearer picture of the whole molecular volume of the lipid. If there is a difference in the AA-CG molecular volumne, one way to improve this could be to lengthen bonds.
 
 ### 8.2) Final considerations
