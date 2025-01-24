@@ -23,7 +23,7 @@ Files required and worked examples for this tutorial can be downloaded here.
 
 [7) Optimize CG bonded parameters](#7-optimize-cg-bonded-parameters)
 
-[8) Comparison to experimental results, further refinements, and final considerations](#8-comparison-to-experimental-results-further-refinements-and-final-considerations)
+[8) Comparison to experimental results, further refinements, and final considerations](#8-molecular-volume-and-shape-comparison-to-experimental-results-further-refinements-and-final-considerations)
 
 [References and notes](#references-and-notes)
 
@@ -310,7 +310,7 @@ and dihedrals (AA is in gray, Martini is in green):
 
 The agreement is very good. Note that the bimodality of the distributions of some of the dihedrals cannot be captured by the CG model. However, the size of the CG distribution will seemingly capture the two AA configurations into the single CG configuration. If the agreement is not satisfactory at the first iteration - which is likely to happen - you should play with the equilibrium value and force constants in the CG `itp` and iterate till satisfactory agreement is achieved.
 
-## 8) Comparison to experimental results, further refinements, and final considerations
+## 8) Molecular volume and shape, comparison to experimental results, further refinements, and final considerations
 
 ### 8.1) Molecular volume and shape
 
