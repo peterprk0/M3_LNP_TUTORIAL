@@ -3,7 +3,7 @@ This tutorial aims to showcase the parametrization of ionizable lipids to Martin
 
 Adapted from the [Parametrization of a new small molecule](https://github.com/ricalessandri/Martini3-small-molecules/blob/main/tutorials/M3tutorials--parameterizing-a-new-small-molecule.md) Martini 3 Tutorial.
 
-Files required and worked examples for this tutorial can be downloaded [here](https://drive.google.com/file/d/1YVG3RWJRg98srtKgBzb7ghFq1QzTfNTV/view?usp=sharing).
+Files required and worked examples for this tutorial can be downloaded [here](https://drive.google.com/uc?export=download&id=1YVG3RWJRg98srtKgBzb7ghFq1QzTfNTV).
 
 ## Table of contents
 
