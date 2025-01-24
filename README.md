@@ -68,7 +68,7 @@ Have a look in the `forcefield` directory and examine the `SM102H_AA.itp` file, 
 
 ```
 cd  forcefield
-vim SM102-H_AA.itp
+vim SM102H.itp
 ```
 
 ## 2) Atom-to-bead mapping
