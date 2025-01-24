@@ -343,7 +343,15 @@ This should give you some of the views you find rendered below. Below you find a
 <img src="SASA_distribution_AA-CG.jpg" width="1200" alt="AA-CG bond distributions.jpg">
 </p>
 
-The SASA distributions show a discrepancy of about 5% (the average CG SASA is about 5% smaller than the AA one - see `SASA-AA-individual-IL_01.xvg` and `SASA-CG-individual-IL_01.xvg`), which is acceptable, but not ideal. Inspecting the Connolly surfaces (AA in gray, CG in blue) gives you a clearer picture: while the naphthalene moiety on average seems to be captured quite accurately by the CG model, the T-bead 1 does seem not to account for the whole molecular volume of the ethyl group. One way to improve this could be to lengthen bonds 1-2, and 1-4.
+The CG SASA and AA SASA distributions show very good agreement overall. A good approach would be to calculate individually the SASA of each lipid and then compare the average of all the AA SASA with the average of all the CG SASA. You can use a script in the `sm102h-parametrization-worked/7_SASA/AVG_of_AVG.py`. You should put the script in the `sm102h-parametrization/7_SASA/AA` and in the `sm102h-parametrization/7_SASA/CG` folders.
+
+`
+(sm102h-parametrization/7_SASA/AA)
+cp  sm102h-parametrization-worked/7_SASA/AVG_of_AVG.py .
+python3 AVG_of_AVG.py
+`
+
+You can also inspecting the Connolly surfaces (AA in gray, CG in blue). It gives you a clearer picture of the whole molecular volume of the lipid. If there is a difference in the AA-CG molecular volumne, one way to improve this could be to lengthen bonds.
 
 ### 8.2) Final considerations
 
